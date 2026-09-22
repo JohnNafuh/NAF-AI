@@ -6,6 +6,10 @@
 
     <title>NAF AI</title>
 
+    <link rel="preconnect" href="https://fonts.googleapis.com">
+    <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+    <link href="https://fonts.googleapis.com/css2?family=DM+Sans:wght@400;500;600;700&family=Manrope:wght@600;700;800&display=swap" rel="stylesheet">
+
     <link rel="stylesheet" href="style.css">
 </head>
 
@@ -13,85 +17,121 @@
 
     <div class="app">
 
-        <aside class="sidebar">
+        <!-- SIDEBAR -->
+        <aside class="sidebar" id="sidebar">
 
             <div class="brand">
-                <div class="logo">N</div>
+                <div class="brand-mark">N</div>
                 <span>NAF AI</span>
             </div>
 
             <button class="new-chat" id="newChat">
-                <span>+</span>
-                New chat
+                <span class="plus">+</span>
+                <span>New conversation</span>
             </button>
 
-            <div class="history">
-                <p class="history-title">RECENT</p>
+            <div class="sidebar-section">
+                <div class="section-label">CONVERSATIONS</div>
                 <div id="chatHistory"></div>
             </div>
 
-            <div class="sidebar-bottom">
-                <div class="profile">
-                    <div class="avatar">N</div>
-                    <div>
+            <div class="sidebar-footer">
+                <div class="user-card">
+                    <div class="user-avatar">N</div>
+
+                    <div class="user-info">
                         <strong>NAF</strong>
-                        <small>Personal AI</small>
+                        <span>Personal workspace</span>
                     </div>
+
+                    <button class="more-button">•••</button>
                 </div>
             </div>
 
         </aside>
 
 
+        <!-- MAIN -->
         <main class="main">
 
             <header class="topbar">
-                <button class="menu" id="menu">☰</button>
+
+                <button class="mobile-menu" id="menu">
+                    <span></span>
+                    <span></span>
+                    <span></span>
+                </button>
 
                 <div class="mobile-brand">
-                    <div class="logo">N</div>
+                    <div class="brand-mark">N</div>
                     <span>NAF AI</span>
                 </div>
 
-                <button class="settings">•••</button>
+                <button class="top-action">
+                    <span></span>
+                    New conversation
+                </button>
+
             </header>
 
 
+            <!-- CHAT AREA -->
             <section class="chat">
 
+                <!-- WELCOME -->
                 <div class="welcome" id="welcome">
 
-                    <div class="welcome-logo">
-                        N
+                    <div class="hero-mark">
+                        <div class="hero-n">N</div>
                     </div>
 
-                    <h1>What can I help you with?</h1>
+                    <div class="eyebrow">
+                        NAF INTELLIGENCE
+                    </div>
 
-                    <p>
-                        Ask NAF AI anything. Ideas, code, research,
-                        business, writing and more.
+                    <h1>
+                        What are we<br>
+                        <span>building today?</span>
+                    </h1>
+
+                    <p class="welcome-text">
+                        Think, create, research, analyze and build with
+                        your personal AI workspace.
                     </p>
+
 
                     <div class="suggestions">
 
-                        <button data-prompt="Help me build a business idea">
-                            <span>💡</span>
-                            Build something
+                        <button data-prompt="Help me develop a new business idea">
+                            <div class="suggestion-icon">↗</div>
+                            <div>
+                                <strong>Build an idea</strong>
+                                <span>Turn a concept into a plan</span>
+                            </div>
                         </button>
 
-                        <button data-prompt="Explain this concept simply">
-                            <span>🧠</span>
-                            Explain something
+                        <button data-prompt="Explain this concept to me simply">
+                            <div class="suggestion-icon">◇</div>
+                            <div>
+                                <strong>Learn something</strong>
+                                <span>Understand complex ideas</span>
+                            </div>
                         </button>
 
-                        <button data-prompt="Help me write some code">
-                            <span>💻</span>
-                            Write code
+                        <button data-prompt="Help me write and improve some code">
+                            <div class="suggestion-icon">{ }</div>
+                            <div>
+                                <strong>Write code</strong>
+                                <span>Build and solve technical problems</span>
+                            </div>
                         </button>
 
-                        <button data-prompt="Help me analyze some information">
-                            <span>📊</span>
-                            Analyze information
+                        <button data-prompt="Help me analyze this information">
+                            <div class="suggestion-icon">◌</div>
+                            <div>
+                                <strong>Analyze</strong>
+                                <span>Find patterns and useful insights</span>
+                            </div>
                         </button>
 
                     </div>
@@ -99,36 +139,44 @@
                 </div>
 
 
+                <!-- MESSAGES -->
                 <div class="messages" id="messages"></div>
 
             </section>
 
 
+            <!-- COMPOSER -->
             <div class="composer-area">
 
                 <div class="composer">
 
+                    <button class="attach-button" title="Attach file">
+                        +
+                    </button>
+
                     <textarea
                         id="input"
-                        placeholder="Message NAF AI..."
                         rows="1"
+                        placeholder="Ask NAF AI anything..."
                     ></textarea>
 
-                    <button id="send">
-                        ↑
+                    <button class="send-button" id="send" aria-label="Send message">
+                        <span>↑</span>
                     </button>
 
                 </div>
 
-                <p class="disclaimer">
-                    NAF AI can make mistakes. Check important information.
-                </p>
+                <div class="composer-footer">
+                    <span>NAF AI</span>
+                    <span>AI can make mistakes. Verify important information.</span>
+                </div>
 
             </div>
 
         </main>
 
     </div>
+
 
     <script src="app.js"></script>
 
