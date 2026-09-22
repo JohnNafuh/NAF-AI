@@ -1,12 +1,12 @@
 :root {
     --orange: #ff641f;
     --black: #11100f;
-    --gray: #8d8882;
-    --light: #e9e5df;
+    --muted: #858079;
+    --line: #e7e3de;
     --bg: #faf9f7;
     --white: #fff;
-    --font: "DM Sans", sans-serif;
     --display: "Manrope", sans-serif;
+    --body: "DM Sans", sans-serif;
 }
 
 * {
@@ -25,22 +25,18 @@ body {
     overflow: hidden;
     background: var(--bg);
     color: var(--black);
-    font-family: var(--font);
+    font-family: var(--body);
 }
 
 button,
+a,
 textarea {
     font: inherit;
 }
 
 button {
-    color: inherit;
+    cursor: pointer;
 }
-
-
-/* ================================
-   EXPERIENCE
-================================ */
 
 .experience {
     position: relative;
@@ -50,17 +46,15 @@ button {
 }
 
 
-/* ================================
-   NAV
-================================ */
+/* NAV */
 
 .nav {
     position: absolute;
-    z-index: 50;
+    z-index: 20;
     top: 0;
     left: 0;
     width: 100%;
-    height: 68px;
+    height: 70px;
     padding: 0 22px;
     display: flex;
     align-items: center;
@@ -92,8 +86,8 @@ button {
     position: absolute;
     left: 50%;
     transform: translateX(-50%);
-    color: #99938c;
-    font-size: 8px;
+    color: #aaa49d;
+    font-size: 7px;
     font-weight: 700;
     letter-spacing: 1.5px;
 }
@@ -110,10 +104,9 @@ button {
 .menu-button {
     width: 38px;
     height: 38px;
-    border: 1px solid var(--light);
+    border: 1px solid var(--line);
     border-radius: 50%;
-    background: rgba(255,255,255,.85);
-    cursor: pointer;
+    background: rgba(255,255,255,.9);
 }
 
 .menu-button span {
@@ -125,25 +118,23 @@ button {
 }
 
 
-/* ================================
-   BACKGROUND
-================================ */
+/* BACKGROUND */
 
 .grid {
     position: absolute;
     inset: 0;
-    opacity: .32;
+    opacity: .3;
     background-image:
-        linear-gradient(var(--light) 1px, transparent 1px),
-        linear-gradient(90deg, var(--light) 1px, transparent 1px);
+        linear-gradient(var(--line) 1px, transparent 1px),
+        linear-gradient(90deg, var(--line) 1px, transparent 1px);
     background-size: 70px 70px;
-    mask-image: radial-gradient(circle at 50% 48%, black, transparent 78%);
+    mask-image: radial-gradient(circle at center, black, transparent 76%);
 }
 
 .glow {
     position: absolute;
-    width: 280px;
-    height: 280px;
+    width: 300px;
+    height: 300px;
     border-radius: 50%;
     background: #ff641f18;
     filter: blur(75px);
@@ -151,7 +142,7 @@ button {
 }
 
 .glow-one {
-    top: 35%;
+    top: 42%;
     left: 50%;
     transform: translate(-50%, -50%);
 }
@@ -162,9 +153,7 @@ button {
 }
 
 
-/* ================================
-   HERO
-================================ */
+/* HERO */
 
 .hero {
     position: relative;
@@ -173,30 +162,27 @@ button {
 }
 
 
-/* ================================
-   HERO COPY
-================================ */
+/* HEADLINE */
 
 .hero-info {
     position: absolute;
-    z-index: 3;
-    top: 15%;
+    z-index: 5;
+    top: 13%;
     left: 22px;
-    width: calc(100% - 44px);
 }
 
 .eyebrow {
     color: var(--orange);
-    font-size: 8px;
+    font-size: 7px;
     font-weight: 800;
     letter-spacing: 1.8px;
 }
 
 .hero-info h1 {
-    margin-top: 11px;
+    margin-top: 10px;
     font-family: var(--display);
-    font-size: clamp(48px, 15vw, 72px);
-    line-height: .84;
+    font-size: 58px;
+    line-height: .86;
     letter-spacing: -4px;
 }
 
@@ -207,24 +193,22 @@ button {
 
 .hero-info p {
     width: 250px;
-    margin-top: 18px;
-    color: var(--gray);
-    font-size: 11px;
+    margin-top: 16px;
+    color: var(--muted);
+    font-size: 10px;
     line-height: 1.6;
 }
 
 
-/* ================================
-   CORE
-================================ */
+/* CORE */
 
 .core-area {
     position: absolute;
     z-index: 2;
-    top: 56%;
+    top: 54%;
     left: 50%;
-    width: min(78vw, 340px);
-    height: min(78vw, 340px);
+    width: min(82vw, 350px);
+    height: min(82vw, 350px);
     transform: translate(-50%, -50%);
     touch-action: none;
 }
@@ -239,13 +223,13 @@ button {
 }
 
 .orbit-one {
-    width: 48%;
-    height: 48%;
+    width: 45%;
+    height: 45%;
 }
 
 .orbit-two {
-    width: 72%;
-    height: 72%;
+    width: 70%;
+    height: 70%;
 }
 
 .orbit-three {
@@ -258,15 +242,14 @@ button {
     position: absolute;
     top: 50%;
     left: 50%;
-    width: 92px;
-    height: 92px;
+    width: 96px;
+    height: 96px;
     transform: translate(-50%, -50%);
-    transition: .35s ease;
 }
 
 .core-ring {
     position: absolute;
-    inset: -9px;
+    inset: -10px;
     border: 1px solid #ff641f55;
     border-radius: 50%;
     animation: pulse 3s ease-in-out infinite;
@@ -280,7 +263,7 @@ button {
     border-radius: 50%;
     background: var(--orange);
     box-shadow:
-        0 18px 50px #ff641f35,
+        0 20px 60px #ff641f35,
         inset 0 0 0 1px #ffffff30;
     animation: breathe 4s ease-in-out infinite;
 }
@@ -288,18 +271,18 @@ button {
 .core-letter {
     color: white;
     font-family: var(--display);
-    font-size: 36px;
+    font-size: 38px;
     font-weight: 800;
 }
 
 .core-label {
     position: absolute;
-    top: calc(100% + 14px);
+    top: calc(100% + 15px);
     width: 100%;
     text-align: center;
     color: #8e8881;
     font-size: 7px;
-    letter-spacing: 3px;
+    letter-spacing: 2.5px;
     font-weight: 800;
 }
 
@@ -309,7 +292,7 @@ button {
     }
 
     50% {
-        transform: scale(1.04);
+        transform: scale(1.045);
     }
 }
 
@@ -326,9 +309,7 @@ button {
 }
 
 
-/* ================================
-   CORE NODES
-================================ */
+/* NODES */
 
 .orbit-node {
     position: absolute;
@@ -336,7 +317,7 @@ button {
     place-items: center;
     width: 25px;
     height: 25px;
-    border: 1px solid var(--light);
+    border: 1px solid var(--line);
     border-radius: 50%;
     background: rgba(255,255,255,.9);
     color: #918b84;
@@ -344,7 +325,7 @@ button {
 }
 
 .node-one {
-    top: 4%;
+    top: 3%;
     left: calc(50% - 12px);
 }
 
@@ -354,34 +335,30 @@ button {
 }
 
 .node-three {
-    bottom: 6%;
-    left: 21%;
+    bottom: 5%;
+    left: 19%;
 }
 
 
-/* ================================
-   CAPABILITIES
-================================ */
+/* CAPABILITIES */
 
 .capabilities {
     position: absolute;
-    z-index: 5;
+    z-index: 8;
     left: 22px;
     right: 22px;
     bottom: 105px;
     display: grid;
     grid-template-columns: repeat(4, 1fr);
-    gap: 6px;
+    gap: 5px;
 }
 
 .capability {
-    min-width: 0;
     padding: 9px 2px;
     border: 1px solid transparent;
     border-radius: 30px;
     background: transparent;
-    color: #817b74;
-    cursor: pointer;
+    color: #858079;
     font-size: 7px;
     font-weight: 800;
     letter-spacing: .8px;
@@ -392,44 +369,40 @@ button {
 }
 
 .capability.active {
-    border-color: #f1c0a8;
-    background: #fff4ef;
+    border-color: #f3c4ad;
+    background: #fff3ed;
     color: var(--orange);
 }
 
 
-/* ================================
-   BOTTOM CTA
-================================ */
+/* BOTTOM */
 
 .hero-bottom {
     position: absolute;
-    z-index: 6;
+    z-index: 10;
     left: 22px;
     right: 22px;
-    bottom: 22px;
+    bottom: 20px;
 }
 
-.scroll,
-.version {
+.system-label {
     display: none;
 }
 
 .enter-button {
     width: 100%;
     height: 50px;
+    padding: 0 18px;
     display: flex;
     align-items: center;
     justify-content: space-between;
-    padding: 0 18px;
     border: 0;
     border-radius: 15px;
     background: var(--black);
     color: white;
-    cursor: pointer;
     font-size: 9px;
     font-weight: 800;
-    letter-spacing: 1.2px;
+    letter-spacing: 1px;
 }
 
 .enter-button strong {
@@ -438,9 +411,7 @@ button {
 }
 
 
-/* ================================
-   WORKSPACE
-================================ */
+/* WORKSPACE */
 
 .workspace {
     position: absolute;
@@ -458,19 +429,18 @@ button {
 }
 
 .workspace-top {
-    height: 68px;
+    height: 70px;
     padding: 0 22px;
     display: flex;
     align-items: center;
     justify-content: space-between;
-    border-bottom: 1px solid var(--light);
+    border-bottom: 1px solid var(--line);
 }
 
 .back-button {
     border: 0;
     background: transparent;
-    color: var(--gray);
-    cursor: pointer;
+    color: var(--muted);
     font-size: 8px;
     letter-spacing: 1px;
 }
@@ -529,18 +499,15 @@ button {
     border: 0;
     outline: 0;
     background: transparent;
-    font-size: 13px;
 }
 
 .workspace-input button {
     width: 43px;
     height: 43px;
-    flex-shrink: 0;
     border: 0;
     border-radius: 10px;
     background: var(--orange);
     color: white;
-    cursor: pointer;
     font-size: 17px;
 }
 
@@ -553,9 +520,7 @@ button {
 }
 
 
-/* ================================
-   MENU
-================================ */
+/* MENU */
 
 .menu-panel {
     position: absolute;
@@ -570,7 +535,6 @@ button {
     background: white;
     transform: translateX(100%);
     transition: transform .5s cubic-bezier(.76,0,.24,1);
-    box-shadow: -20px 0 60px #17171710;
 }
 
 .menu-panel.open {
@@ -582,7 +546,6 @@ button {
     border: 0;
     background: transparent;
     font-size: 28px;
-    cursor: pointer;
 }
 
 .panel-label {
@@ -601,15 +564,12 @@ button {
 }
 
 .menu-panel nav a {
+    color: var(--black);
     text-decoration: none;
     font-family: var(--display);
     font-size: 38px;
     font-weight: 800;
     letter-spacing: -2px;
-}
-
-.menu-panel nav a:hover {
-    color: var(--orange);
 }
 
 .panel-footer {
@@ -622,9 +582,7 @@ button {
 }
 
 
-/* ================================
-   DESKTOP
-================================ */
+/* DESKTOP */
 
 @media (min-width: 801px) {
 
@@ -634,9 +592,8 @@ button {
     }
 
     .hero-info {
+        top: 30%;
         left: 7%;
-        top: 31%;
-        width: 300px;
     }
 
     .hero-info h1 {
@@ -690,7 +647,6 @@ button {
 
     .capability.active {
         background: transparent;
-        border-color: #f1c0a8;
         border-width: 0 0 1px;
         border-radius: 0;
     }
@@ -701,32 +657,19 @@ button {
         bottom: 30px;
     }
 
+    .system-label {
+        display: block;
+        color: #aaa49d;
+        font-size: 8px;
+        letter-spacing: 1.5px;
+    }
+
     .enter-button {
+        position: absolute;
+        left: 50%;
+        bottom: 0;
         width: auto;
-    }
-
-    .scroll,
-    .version {
-        display: flex;
-    }
-
-    .scroll {
-        align-items: center;
-        gap: 10px;
-        color: #aaa49d;
-        font-size: 8px;
-        letter-spacing: 1.5px;
-    }
-
-    .scroll-line {
-        width: 35px;
-        height: 1px;
-        background: #c9c3bc;
-    }
-
-    .version {
-        color: #aaa49d;
-        font-size: 8px;
-        letter-spacing: 1.5px;
+        transform: translateX(-50%);
+        padding: 0 18px;
     }
 }
