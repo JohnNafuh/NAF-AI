@@ -55,45 +55,56 @@
     </section>
 
 
-    <section class="ai-screen" id="aiScreen">
+<section class="ai-screen" id="aiScreen">
 
-        <div class="ai-top">
-            <span>NAF AI</span>
+    <button class="back-btn" id="backBtn">
+        <span>←</span>
+        BACK
+    </button>
 
-            <span class="online">
-                <i></i>
-                ONLINE
-            </span>
+    <div class="ai-content">
+
+        <div class="question">
+            WHAT CAN
+            <span>NAF DO FOR YOU?</span>
         </div>
 
-        <div class="ai-content">
+        <div class="search-wrap">
 
-            <div class="question">
-                WHAT CAN NAF
-                <span>DO FOR YOU?</span>
-            </div>
+            <div class="search-box" id="searchBox">
 
-            <div class="input-area">
+                <div class="search-icon">
+                    <span>⌕</span>
+                </div>
 
-                <textarea
+                <input
                     id="prompt"
-                    rows="1"
+                    type="text"
                     placeholder="Ask anything..."
-                ></textarea>
+                    autocomplete="off"
+                >
 
-                <button id="send" aria-label="Send">
-                    ↗
+                <button
+                    class="clear-btn"
+                    id="clearBtn"
+                    aria-label="Clear"
+                >
+                    ×
                 </button>
 
+                <span class="shortcut">↵</span>
+
             </div>
 
         </div>
 
-        <div class="ai-footer">
-            PERSONAL INTELLIGENCE
-        </div>
+    </div>
 
-    </section>
+    <div class="ai-footer">
+        PERSONAL INTELLIGENCE
+    </div>
+
+</section>
 
 </main>
 
