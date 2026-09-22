@@ -65,14 +65,9 @@ textarea {
 
 /* NAF AI */
 
-.brand {
-    position: absolute;
-    top: 50%;
-    left: 50%;
-
-    display: flex;
-
-    transform: translate(-50%, -50%);
+top: 13%;
+left: 50%;
+transform: translateX(-50%);
 
     font-family: "Manrope", sans-serif;
     font-size: clamp(64px, 18vw, 150px);
