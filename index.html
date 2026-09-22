@@ -2,10 +2,7 @@
 <html lang="en">
 <head>
     <meta charset="UTF-8">
-    <meta
-        name="viewport"
-        content="width=device-width, initial-scale=1.0, maximum-scale=1.0, user-scalable=no"
-    >
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
 
     <title>NAF AI</title>
 
@@ -22,97 +19,99 @@
 
 <body>
 
-    <main class="naf">
+<main class="naf">
 
-        <!-- FLOATING BACKGROUND ELEMENTS -->
-
-        <div class="float float-1"></div>
-        <div class="float float-2"></div>
-        <div class="float float-3"></div>
-        <div class="float float-4"></div>
-        <div class="float float-5"></div>
+    <!-- METEOR / BEAM FIELD -->
+    <canvas id="meteorCanvas"></canvas>
 
 
-        <!-- LANDING -->
+    <!-- HOMEPAGE -->
+    <section class="landing" id="landing">
 
-        <section class="landing" id="landing">
-
-            <div class="brand">
-                NAF
-            </div>
-
-            <button class="btn" id="useAI">
-                USE AI
-            </button>
-
-        </section>
+        <!-- NAF AI -->
+        <div class="brand" id="brand">
+            <span>N</span>
+            <span>A</span>
+            <span>F</span>
+            <span>&nbsp;</span>
+            <span>A</span>
+            <span>I</span>
+        </div>
 
 
-        <!-- LOADING -->
+        <!-- USE AI -->
+        <button class="btn" id="useAI">
+            USE AI
+        </button>
 
-        <section class="loading" id="loading">
+    </section>
 
-            <div class="rings">
 
-                <div class="ring ring-one"></div>
-                <div class="ring ring-two"></div>
+    <!-- LOADING -->
+    <section class="loading" id="loading">
 
-            </div>
+        <div class="rings">
+            <div class="ring ring-one"></div>
+            <div class="ring ring-two"></div>
+        </div>
 
-            <span class="loading-label">
-                INITIALIZING NAF AI
+        <span class="loading-label">
+            INITIALIZING NAF AI
+        </span>
+
+    </section>
+
+
+    <!-- AI SCREEN -->
+    <section class="ai-screen" id="aiScreen">
+
+        <div class="ai-top">
+
+            <span>NAF AI</span>
+
+            <span class="online">
+                <i></i>
+                ONLINE
             </span>
 
-        </section>
+        </div>
 
 
-        <!-- AI -->
+        <div class="ai-content">
 
-        <section class="ai-screen" id="aiScreen">
-
-            <div class="ai-top">
-                <span>NAF AI</span>
-                <span class="online">
-                    <i></i>
-                    ONLINE
-                </span>
+            <div class="question">
+                WHAT CAN NAF
+                <span>DO FOR YOU?</span>
             </div>
 
 
-            <div class="ai-content">
+            <div class="input-area">
 
-                <div class="question">
-                    WHAT CAN NAF
-                    <span>DO FOR YOU?</span>
-                </div>
+                <textarea
+                    id="prompt"
+                    rows="1"
+                    placeholder="Ask anything..."
+                ></textarea>
 
-                <div class="input-area">
-
-                    <textarea
-                        id="prompt"
-                        rows="1"
-                        placeholder="Ask anything..."
-                    ></textarea>
-
-                    <button id="send" aria-label="Send">
-                        ↗
-                    </button>
-
-                </div>
+                <button id="send" aria-label="Send">
+                    ↗
+                </button>
 
             </div>
 
-
-            <div class="ai-footer">
-                PERSONAL INTELLIGENCE
-            </div>
-
-        </section>
-
-    </main>
+        </div>
 
 
-    <script src="app.js"></script>
+        <div class="ai-footer">
+            PERSONAL INTELLIGENCE
+        </div>
+
+    </section>
+
+</main>
+
+
+<script src="app.js"></script>
 
 </body>
 </html>
