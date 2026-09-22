@@ -329,31 +329,56 @@ clearBtn.addEventListener(
    SEARCH / SEND
 ========================= */
 
-function sendPrompt() {
+async function sendPrompt() {
 
-    const message =
-        prompt.value.trim();
+    const message = prompt.value.trim();
 
     if (!message) return;
 
-    console.log(
-        "NAF AI:",
-        message
-    );
+    console.log("Sending to NAF AI:", message);
 
-    /*
-       AI BACKEND WILL BE
-       CONNECTED HERE LATER.
-    */
+    try {
 
-    prompt.value = "";
+        const response = await fetch(
+            "https://naf-ai-backend.vercel.app/api/chat",
+            {
+                method: "POST",
 
-    searchBox.classList.remove(
-        "has-text"
-    );
+                headers: {
+                    "Content-Type": "application/json"
+                },
+
+                body: JSON.stringify({
+                    message: message
+                })
+            }
+        );
+
+        const data = await response.json();
+
+        console.log("NAF AI response:", data);
+
+        if (!response.ok) {
+            throw new Error(
+                data.error || "Something went wrong"
+            );
+        }
+
+        alert(data.reply);
+
+        prompt.value = "";
+
+        searchBox.classList.remove("has-text");
+
+    } catch (error) {
+
+        console.error(error);
+
+        alert(
+            "NAF AI couldn't respond right now."
+        );
+    }
 }
-
-
 prompt.addEventListener(
     "keydown",
     event => {
