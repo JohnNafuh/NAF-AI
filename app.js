@@ -1,67 +1,30 @@
+const canvas = document.getElementById("meteorCanvas");
+const ctx = canvas.getContext("2d");
+
+const useAI = document.getElementById("useAI");
+const landing = document.getElementById("landing");
+const loading = document.getElementById("loading");
+const aiScreen = document.getElementById("aiScreen");
+
 const searchBox = document.getElementById("searchBox");
 const prompt = document.getElementById("prompt");
 const clearBtn = document.getElementById("clearBtn");
 const backBtn = document.getElementById("backBtn");
 
+let beams = [];
+let animationId;
+let transitioning = false;
 
-/* EXPAND SEARCH */
-
-searchBox.addEventListener("click", () => {
-    searchBox.classList.add("expanded");
-    prompt.focus();
-});
-
-
-prompt.addEventListener("focus", () => {
-    searchBox.classList.add("expanded");
-});
+const COLORS = [
+    "255, 100, 31",
+    "255, 145, 85",
+    "205, 200, 194"
+];
 
 
-/* CLEAR */
-
-prompt.addEventListener("input", () => {
-
-    searchBox.classList.toggle(
-        "has-text",
-        prompt.value.length > 0
-    );
-
-});
-
-
-clearBtn.addEventListener("click", event => {
-
-    event.stopPropagation();
-
-    prompt.value = "";
-
-    searchBox.classList.remove("has-text");
-
-    prompt.focus();
-
-});
-
-
-/* BACK */
-
-backBtn.addEventListener("click", () => {
-
-    aiScreen.classList.remove("active");
-
-    landing.classList.remove("hidden");
-
-    useAI.style.opacity = "1";
-
-    useAI.style.transform =
-        "translateX(-50%)";
-
-    transitioning = false;
-
-    resizeCanvas();
-    animate();
-
-});
-
+/* =========================
+   METEOR FIELD
+========================= */
 
 function resizeCanvas() {
     const dpr = Math.min(window.devicePixelRatio || 1, 2);
@@ -94,17 +57,21 @@ class Beam {
             ? Math.random() * innerHeight
             : -150;
 
-        this.length = Math.random() * 240 + 130;
-        this.speed = Math.random() * 5 + 3;
+        this.length =
+            Math.random() * 240 + 130;
 
-        this.size = Math.random() * 1.5 + 1;
+        this.speed =
+            Math.random() * 5 + 3;
+
+        this.size =
+            Math.random() * 1.5 + 1;
 
         this.angle =
             Math.PI / 4 +
-            (Math.random() * .12 - .06);
+            (Math.random() * 0.12 - 0.06);
 
         this.opacity =
-            Math.random() * .35 + .2;
+            Math.random() * 0.35 + 0.2;
 
         this.color =
             COLORS[
@@ -151,8 +118,8 @@ class Beam {
         );
 
         tail.addColorStop(
-            .72,
-            `rgba(${this.color},${this.opacity * .3})`
+            0.72,
+            `rgba(${this.color},${this.opacity * 0.3})`
         );
 
         tail.addColorStop(
@@ -166,7 +133,7 @@ class Beam {
 
         ctx.moveTo(
             -this.length,
-            -.5
+            -0.5
         );
 
         ctx.lineTo(
@@ -181,7 +148,7 @@ class Beam {
 
         ctx.lineTo(
             -this.length,
-            .5
+            0.5
         );
 
         ctx.closePath();
@@ -189,7 +156,7 @@ class Beam {
         ctx.fill();
 
         ctx.shadowColor =
-            `rgba(${this.color},.8)`;
+            `rgba(${this.color},0.8)`;
 
         ctx.shadowBlur =
             this.size * 8;
@@ -260,7 +227,9 @@ window.addEventListener(
 );
 
 
-/* USE AI */
+/* =========================
+   USE AI
+========================= */
 
 useAI.addEventListener("click", () => {
 
@@ -283,6 +252,7 @@ useAI.addEventListener("click", () => {
 
     }, 400);
 
+
     setTimeout(() => {
 
         loading.classList.remove("active");
@@ -293,10 +263,71 @@ useAI.addEventListener("click", () => {
 });
 
 
-/* INPUT */
+/* =========================
+   SEARCH
+========================= */
 
-const prompt = document.getElementById("prompt");
-const send = document.getElementById("send");
+function expandSearch() {
+
+    searchBox.classList.add("expanded");
+
+    setTimeout(() => {
+        prompt.focus();
+    }, 100);
+}
+
+
+searchBox.addEventListener(
+    "click",
+    expandSearch
+);
+
+
+prompt.addEventListener(
+    "focus",
+    () => {
+        searchBox.classList.add("expanded");
+    }
+);
+
+
+prompt.addEventListener(
+    "input",
+    () => {
+
+        searchBox.classList.toggle(
+            "has-text",
+            prompt.value.length > 0
+        );
+
+    }
+);
+
+
+/* =========================
+   CLEAR
+========================= */
+
+clearBtn.addEventListener(
+    "click",
+    event => {
+
+        event.stopPropagation();
+
+        prompt.value = "";
+
+        searchBox.classList.remove(
+            "has-text"
+        );
+
+        prompt.focus();
+    }
+);
+
+
+/* =========================
+   SEARCH / SEND
+========================= */
 
 function sendPrompt() {
 
@@ -310,14 +341,18 @@ function sendPrompt() {
         message
     );
 
+    /*
+       AI BACKEND WILL BE
+       CONNECTED HERE LATER.
+    */
+
     prompt.value = "";
+
+    searchBox.classList.remove(
+        "has-text"
+    );
 }
 
-
-send.addEventListener(
-    "click",
-    sendPrompt
-);
 
 prompt.addEventListener(
     "keydown",
@@ -332,5 +367,45 @@ prompt.addEventListener(
 
             sendPrompt();
         }
+    }
+);
+
+
+/* =========================
+   BACK
+========================= */
+
+backBtn.addEventListener(
+    "click",
+    () => {
+
+        aiScreen.classList.remove(
+            "active"
+        );
+
+        loading.classList.remove(
+            "active"
+        );
+
+        landing.classList.remove(
+            "hidden"
+        );
+
+        useAI.style.opacity = "1";
+
+        useAI.style.transform =
+            "translateX(-50%)";
+
+        prompt.value = "";
+
+        searchBox.classList.remove(
+            "expanded",
+            "has-text"
+        );
+
+        transitioning = false;
+
+        resizeCanvas();
+        animate();
     }
 );
