@@ -67,7 +67,7 @@ textarea {
 
 .brand {
     position: absolute;
-    top: 13%;
+    top: 11%;
     left: 50%;
 
     display: flex;
@@ -75,11 +75,11 @@ textarea {
 
     transform: translateX(-50%);
 
-    font-family: "Manrope", sans-serif;
-    font-size: clamp(70px, 17vw, 155px);
-    font-weight: 800;
-    line-height: .9;
-    letter-spacing: -7px;
+    font-family: "Space Grotesk", sans-serif;
+    font-size: clamp(90px, 21vw, 190px);
+    font-weight: 700;
+    line-height: .85;
+    letter-spacing: -10px;
 
     white-space: nowrap;
 }
