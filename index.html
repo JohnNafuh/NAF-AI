@@ -4,176 +4,250 @@
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
 
-    <title>NAF AI</title>
+    <title>NAF AI — Intelligence System</title>
 
     <link rel="preconnect" href="https://fonts.googleapis.com">
     <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
-    <link href="https://fonts.googleapis.com/css2?family=DM+Sans:wght@400;500;600;700&family=Manrope:wght@600;700;800&display=swap" rel="stylesheet">
+
+    <link
+        href="https://fonts.googleapis.com/css2?family=DM+Sans:wght@400;500;600;700&family=Manrope:wght@600;700;800&display=swap"
+        rel="stylesheet"
+    >
 
     <link rel="stylesheet" href="style.css">
 </head>
 
 <body>
 
-    <div class="app">
+    <div class="experience">
 
-        <!-- SIDEBAR -->
-        <aside class="sidebar" id="sidebar">
+        <!-- TOP NAVIGATION -->
 
-            <div class="brand">
-                <div class="brand-mark">N</div>
+        <header class="nav">
+
+            <a href="#" class="logo">
+                <span class="logo-mark">N</span>
                 <span>NAF AI</span>
+            </a>
+
+            <div class="system-status">
+                <span class="status-dot"></span>
+                SYSTEM ONLINE
             </div>
 
-            <button class="new-chat" id="newChat">
-                <span class="plus">+</span>
-                <span>New conversation</span>
+            <button class="menu-button" id="menuButton">
+                <span></span>
+                <span></span>
             </button>
 
-            <div class="sidebar-section">
-                <div class="section-label">CONVERSATIONS</div>
-                <div id="chatHistory"></div>
+        </header>
+
+
+        <!-- AMBIENT BACKGROUND -->
+
+        <div class="grid"></div>
+
+        <div class="glow glow-one"></div>
+        <div class="glow glow-two"></div>
+
+
+        <!-- MAIN EXPERIENCE -->
+
+        <main class="hero">
+
+            <div class="coordinates">
+                <span>06° 27' 00" N</span>
+                <span>03° 24' 00" E</span>
             </div>
 
-            <div class="sidebar-footer">
-                <div class="user-card">
-                    <div class="user-avatar">N</div>
 
-                    <div class="user-info">
-                        <strong>NAF</strong>
-                        <span>Personal workspace</span>
-                    </div>
+            <!-- LEFT INFORMATION -->
 
-                    <button class="more-button">•••</button>
+            <div class="hero-info">
+
+                <div class="eyebrow">
+                    PERSONAL INTELLIGENCE SYSTEM
                 </div>
+
+                <h1>
+                    THINK
+                    <span>BEYOND.</span>
+                </h1>
+
+                <p>
+                    An intelligent workspace for ideas, code,
+                    research, creation and everything in between.
+                </p>
+
             </div>
 
-        </aside>
+
+            <!-- CENTRAL CORE -->
+
+            <div class="core-area">
+
+                <div class="orbit orbit-one"></div>
+                <div class="orbit orbit-two"></div>
+                <div class="orbit orbit-three"></div>
+
+                <div class="core">
+
+                    <div class="core-ring"></div>
+
+                    <div class="core-inner">
+                        <span class="core-letter">N</span>
+                    </div>
+
+                    <div class="core-label">
+                        NAF
+                    </div>
+
+                </div>
+
+                <div class="orbit-node node-one">01</div>
+                <div class="orbit-node node-two">02</div>
+                <div class="orbit-node node-three">03</div>
+
+            </div>
 
 
-        <!-- MAIN -->
-        <main class="main">
+            <!-- CAPABILITIES -->
 
-            <header class="topbar">
+            <nav class="capabilities">
 
-                <button class="mobile-menu" id="menu">
-                    <span></span>
-                    <span></span>
-                    <span></span>
+                <button class="capability active" data-mode="think">
+                    <span>01</span>
+                    THINK
                 </button>
 
-                <div class="mobile-brand">
-                    <div class="brand-mark">N</div>
-                    <span>NAF AI</span>
-                </div>
-
-                <button class="top-action">
-                    <span></span>
-                    New conversation
+                <button class="capability" data-mode="create">
+                    <span>02</span>
+                    CREATE
                 </button>
 
-            </header>
+                <button class="capability" data-mode="build">
+                    <span>03</span>
+                    BUILD
+                </button>
+
+                <button class="capability" data-mode="research">
+                    <span>04</span>
+                    RESEARCH
+                </button>
+
+            </nav>
 
 
-            <!-- CHAT AREA -->
-            <section class="chat">
+            <!-- BOTTOM AREA -->
 
-                <!-- WELCOME -->
-                <div class="welcome" id="welcome">
+            <div class="hero-bottom">
 
-                    <div class="hero-mark">
-                        <div class="hero-n">N</div>
-                    </div>
-
-                    <div class="eyebrow">
-                        NAF INTELLIGENCE
-                    </div>
-
-                    <h1>
-                        What are we<br>
-                        <span>building today?</span>
-                    </h1>
-
-                    <p class="welcome-text">
-                        Think, create, research, analyze and build with
-                        your personal AI workspace.
-                    </p>
-
-
-                    <div class="suggestions">
-
-                        <button data-prompt="Help me develop a new business idea">
-                            <div class="suggestion-icon">↗</div>
-                            <div>
-                                <strong>Build an idea</strong>
-                                <span>Turn a concept into a plan</span>
-                            </div>
-                        </button>
-
-                        <button data-prompt="Explain this concept to me simply">
-                            <div class="suggestion-icon">◇</div>
-                            <div>
-                                <strong>Learn something</strong>
-                                <span>Understand complex ideas</span>
-                            </div>
-                        </button>
-
-                        <button data-prompt="Help me write and improve some code">
-                            <div class="suggestion-icon">{ }</div>
-                            <div>
-                                <strong>Write code</strong>
-                                <span>Build and solve technical problems</span>
-                            </div>
-                        </button>
-
-                        <button data-prompt="Help me analyze this information">
-                            <div class="suggestion-icon">◌</div>
-                            <div>
-                                <strong>Analyze</strong>
-                                <span>Find patterns and useful insights</span>
-                            </div>
-                        </button>
-
-                    </div>
-
+                <div class="scroll">
+                    <span class="scroll-line"></span>
+                    EXPLORE NAF
                 </div>
 
+                <button class="enter-button" id="enterAI">
+                    <span>ENTER NAF AI</span>
+                    <strong>↗</strong>
+                </button>
 
-                <!-- MESSAGES -->
-                <div class="messages" id="messages"></div>
-
-            </section>
-
-
-            <!-- COMPOSER -->
-            <div class="composer-area">
-
-                <div class="composer">
-
-                    <button class="attach-button" title="Attach file">
-                        +
-                    </button>
-
-                    <textarea
-                        id="input"
-                        rows="1"
-                        placeholder="Ask NAF AI anything..."
-                    ></textarea>
-
-                    <button class="send-button" id="send" aria-label="Send message">
-                        <span>↑</span>
-                    </button>
-
-                </div>
-
-                <div class="composer-footer">
-                    <span>NAF AI</span>
-                    <span>AI can make mistakes. Verify important information.</span>
+                <div class="version">
+                    NAF / 01.0
                 </div>
 
             </div>
 
         </main>
+
+
+        <!-- AI WORKSPACE -->
+
+        <section class="workspace" id="workspace">
+
+            <div class="workspace-top">
+
+                <button class="back-button" id="backButton">
+                    ← BACK
+                </button>
+
+                <div class="workspace-title">
+                    <span class="status-dot"></span>
+                    NAF AI
+                </div>
+
+                <span class="workspace-version">
+                    INTELLIGENCE / 01
+                </span>
+
+            </div>
+
+
+            <div class="workspace-content">
+
+                <div class="workspace-heading">
+                    <span>NAF INTELLIGENCE</span>
+
+                    <h2>
+                        What are we
+                        <em>building?</em>
+                    </h2>
+                </div>
+
+
+                <div class="workspace-input">
+
+                    <textarea
+                        id="input"
+                        rows="1"
+                        placeholder="Ask NAF anything..."
+                    ></textarea>
+
+                    <button id="send">
+                        ↗
+                    </button>
+
+                </div>
+
+
+                <div class="workspace-hint">
+                    ENTER TO SEND
+                    <span>·</span>
+                    SHIFT + ENTER FOR NEW LINE
+                </div>
+
+            </div>
+
+        </section>
+
+
+        <!-- MENU PANEL -->
+
+        <aside class="menu-panel" id="menuPanel">
+
+            <button class="close-menu" id="closeMenu">
+                ×
+            </button>
+
+            <span class="panel-label">
+                NAF AI
+            </span>
+
+            <nav>
+
+                <a href="#think">Think</a>
+                <a href="#create">Create</a>
+                <a href="#build">Build</a>
+                <a href="#research">Research</a>
+
+            </nav>
+
+            <div class="panel-footer">
+                <span>PERSONAL INTELLIGENCE</span>
+                <span>NAF / 01.0</span>
+            </div>
+
+        </aside>
 
     </div>
 
