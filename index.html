@@ -19,201 +19,75 @@
 
 <body>
 
-    <div class="experience">
+<div class="experience">
 
-        <!-- TOP NAVIGATION -->
+    <header class="nav">
 
-        <header class="nav">
+        <a href="#" class="logo">
+            <span class="logo-mark">N</span>
+            <span>NAF AI</span>
+        </a>
 
-            <a href="#" class="logo">
-                <span class="logo-mark">N</span>
-                <span>NAF AI</span>
-            </a>
+        <div class="system-status">
+            <span class="status-dot"></span>
+            SYSTEM ONLINE
+        </div>
 
-            <div class="system-status">
-                <span class="status-dot"></span>
-                SYSTEM ONLINE
+        <button class="menu-button" id="menuButton" aria-label="Open menu">
+            <span></span>
+            <span></span>
+        </button>
+
+    </header>
+
+
+    <div class="grid"></div>
+
+    <div class="glow glow-one"></div>
+    <div class="glow glow-two"></div>
+
+
+    <main class="hero">
+
+        <section class="hero-info">
+
+            <div class="eyebrow">
+                PERSONAL INTELLIGENCE SYSTEM
             </div>
 
-            <button class="menu-button" id="menuButton">
-                <span></span>
-                <span></span>
-            </button>
+            <h1>
+                THINK
+                <span>BEYOND.</span>
+            </h1>
 
-        </header>
+            <p>
+                Ideas, code, research and creation —
+                connected through one intelligence.
+            </p>
 
-
-        <!-- AMBIENT BACKGROUND -->
-
-        <div class="grid"></div>
-
-        <div class="glow glow-one"></div>
-        <div class="glow glow-two"></div>
+        </section>
 
 
-        <!-- MAIN EXPERIENCE -->
+        <section class="core-area">
 
-        <main class="hero">
+            <div class="orbit orbit-one"></div>
+            <div class="orbit orbit-two"></div>
+            <div class="orbit orbit-three"></div>
 
-            <div class="coordinates">
-                <span>06° 27' 00" N</span>
-                <span>03° 24' 00" E</span>
-            </div>
+            <div class="orbit-node node-one">01</div>
+            <div class="orbit-node node-two">02</div>
+            <div class="orbit-node node-three">03</div>
 
+            <div class="core">
 
-            <!-- LEFT INFORMATION -->
+                <div class="core-ring"></div>
 
-            <div class="hero-info">
-
-                <div class="eyebrow">
-                    PERSONAL INTELLIGENCE SYSTEM
+                <div class="core-inner">
+                    <span class="core-letter">N</span>
                 </div>
 
-                <h1>
-                    THINK
-                    <span>BEYOND.</span>
-                </h1>
-
-                <p>
-                    An intelligent workspace for ideas, code,
-                    research, creation and everything in between.
-                </p>
-
-            </div>
-
-
-            <!-- CENTRAL CORE -->
-
-            <div class="core-area">
-
-                <div class="orbit orbit-one"></div>
-                <div class="orbit orbit-two"></div>
-                <div class="orbit orbit-three"></div>
-
-                <div class="core">
-
-                    <div class="core-ring"></div>
-
-                    <div class="core-inner">
-                        <span class="core-letter">N</span>
-                    </div>
-
-                    <div class="core-label">
-                        NAF
-                    </div>
-
-                </div>
-
-                <div class="orbit-node node-one">01</div>
-                <div class="orbit-node node-two">02</div>
-                <div class="orbit-node node-three">03</div>
-
-            </div>
-
-
-            <!-- CAPABILITIES -->
-
-            <nav class="capabilities">
-
-                <button class="capability active" data-mode="think">
-                    <span>01</span>
-                    THINK
-                </button>
-
-                <button class="capability" data-mode="create">
-                    <span>02</span>
-                    CREATE
-                </button>
-
-                <button class="capability" data-mode="build">
-                    <span>03</span>
-                    BUILD
-                </button>
-
-                <button class="capability" data-mode="research">
-                    <span>04</span>
-                    RESEARCH
-                </button>
-
-            </nav>
-
-
-            <!-- BOTTOM AREA -->
-
-            <div class="hero-bottom">
-
-                <div class="scroll">
-                    <span class="scroll-line"></span>
-                    EXPLORE NAF
-                </div>
-
-                <button class="enter-button" id="enterAI">
-                    <span>ENTER NAF AI</span>
-                    <strong>↗</strong>
-                </button>
-
-                <div class="version">
-                    NAF / 01.0
-                </div>
-
-            </div>
-
-        </main>
-
-
-        <!-- AI WORKSPACE -->
-
-        <section class="workspace" id="workspace">
-
-            <div class="workspace-top">
-
-                <button class="back-button" id="backButton">
-                    ← BACK
-                </button>
-
-                <div class="workspace-title">
-                    <span class="status-dot"></span>
-                    NAF AI
-                </div>
-
-                <span class="workspace-version">
-                    INTELLIGENCE / 01
-                </span>
-
-            </div>
-
-
-            <div class="workspace-content">
-
-                <div class="workspace-heading">
-                    <span>NAF INTELLIGENCE</span>
-
-                    <h2>
-                        What are we
-                        <em>building?</em>
-                    </h2>
-                </div>
-
-
-                <div class="workspace-input">
-
-                    <textarea
-                        id="input"
-                        rows="1"
-                        placeholder="Ask NAF anything..."
-                    ></textarea>
-
-                    <button id="send">
-                        ↗
-                    </button>
-
-                </div>
-
-
-                <div class="workspace-hint">
-                    ENTER TO SEND
-                    <span>·</span>
-                    SHIFT + ENTER FOR NEW LINE
+                <div class="core-label">
+                    NAF CORE
                 </div>
 
             </div>
@@ -221,38 +95,134 @@
         </section>
 
 
-        <!-- MENU PANEL -->
+        <nav class="capabilities">
 
-        <aside class="menu-panel" id="menuPanel">
-
-            <button class="close-menu" id="closeMenu">
-                ×
+            <button class="capability active" data-mode="think">
+                <span>01</span>
+                THINK
             </button>
 
-            <span class="panel-label">
-                NAF AI
-            </span>
+            <button class="capability" data-mode="create">
+                <span>02</span>
+                CREATE
+            </button>
 
-            <nav>
+            <button class="capability" data-mode="build">
+                <span>03</span>
+                BUILD
+            </button>
 
-                <a href="#think">Think</a>
-                <a href="#create">Create</a>
-                <a href="#build">Build</a>
-                <a href="#research">Research</a>
+            <button class="capability" data-mode="research">
+                <span>04</span>
+                RESEARCH
+            </button>
 
-            </nav>
+        </nav>
 
-            <div class="panel-footer">
-                <span>PERSONAL INTELLIGENCE</span>
-                <span>NAF / 01.0</span>
+
+        <div class="hero-bottom">
+
+            <div class="system-label">
+                NAF / INTELLIGENCE CORE
             </div>
 
-        </aside>
+            <button class="enter-button" id="enterAI">
+                <span>ENTER NAF AI</span>
+                <strong>↗</strong>
+            </button>
 
-    </div>
+        </div>
+
+    </main>
 
 
-    <script src="app.js"></script>
+    <section class="workspace" id="workspace">
+
+        <div class="workspace-top">
+
+            <button class="back-button" id="backButton">
+                ← BACK
+            </button>
+
+            <div class="workspace-title">
+                <span class="status-dot"></span>
+                NAF AI
+            </div>
+
+            <span class="workspace-version">
+                INTELLIGENCE / 01
+            </span>
+
+        </div>
+
+
+        <div class="workspace-content">
+
+            <div class="workspace-heading">
+
+                <span>NAF INTELLIGENCE</span>
+
+                <h2>
+                    What are we
+                    <em>building?</em>
+                </h2>
+
+            </div>
+
+
+            <div class="workspace-input">
+
+                <textarea
+                    id="input"
+                    rows="1"
+                    placeholder="Ask NAF anything..."
+                ></textarea>
+
+                <button id="send">
+                    ↗
+                </button>
+
+            </div>
+
+
+            <div class="workspace-hint">
+                ENTER TO SEND
+                <span>·</span>
+                SHIFT + ENTER FOR NEW LINE
+            </div>
+
+        </div>
+
+    </section>
+
+
+    <aside class="menu-panel" id="menuPanel">
+
+        <button class="close-menu" id="closeMenu">
+            ×
+        </button>
+
+        <span class="panel-label">
+            NAF AI
+        </span>
+
+        <nav>
+            <a href="#think">Think</a>
+            <a href="#create">Create</a>
+            <a href="#build">Build</a>
+            <a href="#research">Research</a>
+        </nav>
+
+        <div class="panel-footer">
+            <span>PERSONAL INTELLIGENCE</span>
+            <span>NAF / 01.0</span>
+        </div>
+
+    </aside>
+
+</div>
+
+<script src="app.js"></script>
 
 </body>
 </html>
