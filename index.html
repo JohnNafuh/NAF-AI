@@ -1,0 +1,136 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+
+    <title>NAF AI</title>
+
+    <link rel="stylesheet" href="style.css">
+</head>
+
+<body>
+
+    <div class="app">
+
+        <aside class="sidebar">
+
+            <div class="brand">
+                <div class="logo">N</div>
+                <span>NAF AI</span>
+            </div>
+
+            <button class="new-chat" id="newChat">
+                <span>+</span>
+                New chat
+            </button>
+
+            <div class="history">
+                <p class="history-title">RECENT</p>
+                <div id="chatHistory"></div>
+            </div>
+
+            <div class="sidebar-bottom">
+                <div class="profile">
+                    <div class="avatar">N</div>
+                    <div>
+                        <strong>NAF</strong>
+                        <small>Personal AI</small>
+                    </div>
+                </div>
+            </div>
+
+        </aside>
+
+
+        <main class="main">
+
+            <header class="topbar">
+                <button class="menu" id="menu">☰</button>
+
+                <div class="mobile-brand">
+                    <div class="logo">N</div>
+                    <span>NAF AI</span>
+                </div>
+
+                <button class="settings">•••</button>
+            </header>
+
+
+            <section class="chat">
+
+                <div class="welcome" id="welcome">
+
+                    <div class="welcome-logo">
+                        N
+                    </div>
+
+                    <h1>What can I help you with?</h1>
+
+                    <p>
+                        Ask NAF AI anything. Ideas, code, research,
+                        business, writing and more.
+                    </p>
+
+                    <div class="suggestions">
+
+                        <button data-prompt="Help me build a business idea">
+                            <span>💡</span>
+                            Build something
+                        </button>
+
+                        <button data-prompt="Explain this concept simply">
+                            <span>🧠</span>
+                            Explain something
+                        </button>
+
+                        <button data-prompt="Help me write some code">
+                            <span>💻</span>
+                            Write code
+                        </button>
+
+                        <button data-prompt="Help me analyze some information">
+                            <span>📊</span>
+                            Analyze information
+                        </button>
+
+                    </div>
+
+                </div>
+
+
+                <div class="messages" id="messages"></div>
+
+            </section>
+
+
+            <div class="composer-area">
+
+                <div class="composer">
+
+                    <textarea
+                        id="input"
+                        placeholder="Message NAF AI..."
+                        rows="1"
+                    ></textarea>
+
+                    <button id="send">
+                        ↑
+                    </button>
+
+                </div>
+
+                <p class="disclaimer">
+                    NAF AI can make mistakes. Check important information.
+                </p>
+
+            </div>
+
+        </main>
+
+    </div>
+
+    <script src="app.js"></script>
+
+</body>
+</html>
