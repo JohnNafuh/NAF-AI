@@ -1,20 +1,66 @@
-const canvas = document.getElementById("meteorCanvas");
-const ctx = canvas.getContext("2d");
+const searchBox = document.getElementById("searchBox");
+const prompt = document.getElementById("prompt");
+const clearBtn = document.getElementById("clearBtn");
+const backBtn = document.getElementById("backBtn");
 
-const useAI = document.getElementById("useAI");
-const landing = document.getElementById("landing");
-const loading = document.getElementById("loading");
-const aiScreen = document.getElementById("aiScreen");
 
-let beams = [];
-let animationId;
-let transitioning = false;
+/* EXPAND SEARCH */
 
-const COLORS = [
-    "255, 100, 31",
-    "255, 145, 85",
-    "205, 200, 194"
-];
+searchBox.addEventListener("click", () => {
+    searchBox.classList.add("expanded");
+    prompt.focus();
+});
+
+
+prompt.addEventListener("focus", () => {
+    searchBox.classList.add("expanded");
+});
+
+
+/* CLEAR */
+
+prompt.addEventListener("input", () => {
+
+    searchBox.classList.toggle(
+        "has-text",
+        prompt.value.length > 0
+    );
+
+});
+
+
+clearBtn.addEventListener("click", event => {
+
+    event.stopPropagation();
+
+    prompt.value = "";
+
+    searchBox.classList.remove("has-text");
+
+    prompt.focus();
+
+});
+
+
+/* BACK */
+
+backBtn.addEventListener("click", () => {
+
+    aiScreen.classList.remove("active");
+
+    landing.classList.remove("hidden");
+
+    useAI.style.opacity = "1";
+
+    useAI.style.transform =
+        "translateX(-50%)";
+
+    transitioning = false;
+
+    resizeCanvas();
+    animate();
+
+});
 
 
 function resizeCanvas() {
