@@ -9,38 +9,39 @@ const menuPanel = document.getElementById("menuPanel");
 const capabilities = document.querySelectorAll(".capability");
 const core = document.querySelector(".core");
 const coreArea = document.querySelector(".core-area");
+
 const input = document.getElementById("input");
 const send = document.getElementById("send");
 
 
-// ENTER AI
+// ENTER NAF AI
 
-enterAI.addEventListener("click", () => {
+enterAI?.addEventListener("click", () => {
     workspace.classList.add("open");
 
     setTimeout(() => {
-        input.focus();
-    }, 600);
+        input?.focus();
+    }, 650);
 });
 
 
 // BACK
 
-backButton.addEventListener("click", () => {
+backButton?.addEventListener("click", () => {
     workspace.classList.remove("open");
 });
 
 
 // MENU
 
-menuButton.addEventListener("click", () => {
+menuButton?.addEventListener("click", () => {
     menuPanel.classList.add("open");
 });
 
 
 // CLOSE MENU
 
-closeMenu.addEventListener("click", () => {
+closeMenu?.addEventListener("click", () => {
     menuPanel.classList.remove("open");
 });
 
@@ -61,44 +62,94 @@ capabilities.forEach(button => {
 
         core.dataset.mode = mode;
 
-        core.classList.remove("thinking", "creating", "building", "researching");
+        core.classList.remove(
+            "thinking",
+            "creating",
+            "building",
+            "researching"
+        );
 
-        if (mode === "think") {
-            core.classList.add("thinking");
+        const states = {
+            think: "thinking",
+            create: "creating",
+            build: "building",
+            research: "researching"
+        };
+
+        if (states[mode]) {
+            core.classList.add(states[mode]);
         }
 
-        if (mode === "create") {
-            core.classList.add("creating");
-        }
-
-        if (mode === "build") {
-            core.classList.add("building");
-        }
-
-        if (mode === "research") {
-            core.classList.add("researching");
-        }
     });
 
 });
 
 
-// CORE MOUSE MOVEMENT
+// PHONE TOUCH INTERACTION
 
-document.addEventListener("mousemove", (event) => {
+let startX = 0;
+let startY = 0;
 
-    if (window.innerWidth < 800) return;
+let currentX = 0;
+let currentY = 0;
 
-    const x = (event.clientX / window.innerWidth - 0.5) * 20;
-    const y = (event.clientY / window.innerHeight - 0.5) * 20;
+let dragging = false;
+
+
+coreArea?.addEventListener("touchstart", event => {
+
+    const touch = event.touches[0];
+
+    startX = touch.clientX;
+    startY = touch.clientY;
+
+    dragging = true;
+
+}, { passive: true });
+
+
+coreArea?.addEventListener("touchmove", event => {
+
+    if (!dragging) return;
+
+    const touch = event.touches[0];
+
+    const moveX = touch.clientX - startX;
+    const moveY = touch.clientY - startY;
+
+    currentX = Math.max(-25, Math.min(25, moveX * 0.15));
+    currentY = Math.max(-25, Math.min(25, moveY * 0.15));
 
     coreArea.style.transform =
-        `translate(calc(-50% + ${x}px), calc(-50% + ${y}px))`;
+        `translate(calc(-50% + ${currentX}px), calc(-50% + ${currentY}px))`;
+
+}, { passive: true });
+
+
+coreArea?.addEventListener("touchend", () => {
+
+    dragging = false;
+
+    coreArea.style.transform =
+        "translate(-50%, -50%)";
 
 });
 
 
-// SEND
+// CORE TAP
+
+core?.addEventListener("click", () => {
+
+    core.classList.remove("core-active");
+
+    void core.offsetWidth;
+
+    core.classList.add("core-active");
+
+});
+
+
+// SEND MESSAGE
 
 function sendMessage() {
 
@@ -109,7 +160,6 @@ function sendMessage() {
     console.log("NAF AI:", message);
 
     input.value = "";
-
     input.style.height = "45px";
 
 }
@@ -117,12 +167,12 @@ function sendMessage() {
 
 // SEND BUTTON
 
-send.addEventListener("click", sendMessage);
+send?.addEventListener("click", sendMessage);
 
 
 // ENTER TO SEND
 
-input.addEventListener("keydown", (event) => {
+input?.addEventListener("keydown", event => {
 
     if (event.key === "Enter" && !event.shiftKey) {
 
@@ -135,9 +185,9 @@ input.addEventListener("keydown", (event) => {
 });
 
 
-// AUTO RESIZE TEXTAREA
+// AUTO-GROW INPUT
 
-input.addEventListener("input", () => {
+input?.addEventListener("input", () => {
 
     input.style.height = "auto";
 
