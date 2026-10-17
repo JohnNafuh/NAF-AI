@@ -1,436 +1,154 @@
-const canvas = document.getElementById("meteorCanvas");
-const ctx = canvas.getContext("2d");
+(() => {
+const $ = s => document.querySelector(s);
+const API = "https://naf-ai-backend.vercel.app/api/chat";
+const KEY = "naf-ai-chat-v2";
+const landing = $("#landing"), chat = $("#chat"), feed = $("#feed");
+const input = $("#input"), send = $("#send"), composer = $("#composer");
+let msgs = [], busy = false;
+try { msgs = JSON.parse(localStorage.getItem(KEY)) || []; } catch {}
+const save = () => { try { localStorage.setItem(KEY, JSON.stringify(msgs.slice(-40))); } catch {} };
 
-const useAI = document.getElementById("useAI");
-const landing = document.getElementById("landing");
-const loading = document.getElementById("loading");
-const aiScreen = document.getElementById("aiScreen");
+/* meteors (landing only) */
+const fx = (() => {
+  const c = $("#fx"), x = c.getContext("2d");
+  const reduce = matchMedia("(prefers-reduced-motion: reduce)").matches;
+  let b = [], W, H, id = 0;
+  const mk = init => ({
+    x: init ? Math.random() * W : Math.random() * (W + H) - H,
+    y: init ? Math.random() * H : -120,
+    l: Math.random() * 160 + 80,
+    s: Math.random() * 3 + 2,
+    o: Math.random() * .4 + .15,
+    c: Math.random() < .35 ? "255,106,31" : "255,255,255"
+  });
+  function size() {
+    const d = Math.min(devicePixelRatio || 1, 2);
+    W = innerWidth; H = innerHeight;
+    c.width = W * d; c.height = H * d;
+    x.setTransform(d, 0, 0, d, 0, 0);
+    b = Array.from({ length: W < 600 ? 12 : 22 }, () => mk(true));
+  }
+  function tick() {
+    x.clearRect(0, 0, W, H);
+    for (const m of b) {
+      m.x += m.s * .8; m.y += m.s * .8;
+      if (m.x - m.l > W || m.y - m.l > H) Object.assign(m, mk(false));
+      x.save(); x.translate(m.x, m.y); x.rotate(Math.PI / 4);
+      const g = x.createLinearGradient(-m.l, 0, 0, 0);
+      g.addColorStop(0, `rgba(${m.c},0)`);
+      g.addColorStop(1, `rgba(${m.c},${m.o})`);
+      x.fillStyle = g; x.fillRect(-m.l, -1, m.l, 2); x.restore();
+    }
+    id = requestAnimationFrame(tick);
+  }
+  addEventListener("resize", size); size();
+  return {
+    start() { cancelAnimationFrame(id); if (!reduce) tick(); },
+    stop() { cancelAnimationFrame(id); }
+  };
+})();
+fx.start();
 
-const searchBox = document.getElementById("searchBox");
-const prompt = document.getElementById("prompt");
-const clearBtn = document.getElementById("clearBtn");
-const backBtn = document.getElementById("backBtn");
-
-let beams = [];
-let animationId;
-let transitioning = false;
-
-const COLORS = [
-    "255, 100, 31",
-    "255, 145, 85",
-    "205, 200, 194"
-];
-
-
-/* =========================
-   METEOR FIELD
-========================= */
-
-function resizeCanvas() {
-    const dpr = Math.min(window.devicePixelRatio || 1, 2);
-
-    canvas.width = innerWidth * dpr;
-    canvas.height = innerHeight * dpr;
-
-    canvas.style.width = innerWidth + "px";
-    canvas.style.height = innerHeight + "px";
-
-    ctx.setTransform(dpr, 0, 0, dpr, 0, 0);
-
-    createBeams();
+/* views */
+function show(v) {
+  landing.classList.toggle("on", v === landing);
+  chat.classList.toggle("on", v === chat);
+  if (v === landing) fx.start();
+  else { fx.stop(); input.focus({ preventScroll: true }); feed.scrollTop = feed.scrollHeight; }
 }
+$("#start").onclick = () => show(chat);
+$("#back").onclick = () => show(landing);
 
-
-class Beam {
-
-    constructor() {
-        this.reset(true);
-    }
-
-    reset(initial = false) {
-
-        this.x = initial
-            ? Math.random() * innerWidth - 300
-            : -250;
-
-        this.y = initial
-            ? Math.random() * innerHeight
-            : -150;
-
-        this.length =
-            Math.random() * 240 + 130;
-
-        this.speed =
-            Math.random() * 5 + 3;
-
-        this.size =
-            Math.random() * 1.5 + 1;
-
-        this.angle =
-            Math.PI / 4 +
-            (Math.random() * 0.12 - 0.06);
-
-        this.opacity =
-            Math.random() * 0.35 + 0.2;
-
-        this.color =
-            COLORS[
-                Math.floor(
-                    Math.random() * COLORS.length
-                )
-            ];
-    }
-
-    update() {
-
-        this.x +=
-            Math.cos(this.angle) * this.speed;
-
-        this.y +=
-            Math.sin(this.angle) * this.speed;
-
-        if (
-            this.x - this.length > innerWidth ||
-            this.y - this.length > innerHeight
-        ) {
-            this.reset();
-        }
-    }
-
-    draw() {
-
-        ctx.save();
-
-        ctx.translate(this.x, this.y);
-        ctx.rotate(this.angle);
-
-        const tail =
-            ctx.createLinearGradient(
-                -this.length,
-                0,
-                0,
-                0
-            );
-
-        tail.addColorStop(
-            0,
-            `rgba(${this.color},0)`
-        );
-
-        tail.addColorStop(
-            0.72,
-            `rgba(${this.color},${this.opacity * 0.3})`
-        );
-
-        tail.addColorStop(
-            1,
-            `rgba(${this.color},${this.opacity})`
-        );
-
-        ctx.fillStyle = tail;
-
-        ctx.beginPath();
-
-        ctx.moveTo(
-            -this.length,
-            -0.5
-        );
-
-        ctx.lineTo(
-            0,
-            -this.size
-        );
-
-        ctx.lineTo(
-            0,
-            this.size
-        );
-
-        ctx.lineTo(
-            -this.length,
-            0.5
-        );
-
-        ctx.closePath();
-
-        ctx.fill();
-
-        ctx.shadowColor =
-            `rgba(${this.color},0.8)`;
-
-        ctx.shadowBlur =
-            this.size * 8;
-
-        ctx.fillStyle =
-            `rgba(${this.color},${Math.min(
-                1,
-                this.opacity * 1.5
-            )})`;
-
-        ctx.beginPath();
-
-        ctx.arc(
-            0,
-            0,
-            this.size,
-            0,
-            Math.PI * 2
-        );
-
-        ctx.fill();
-
-        ctx.restore();
-    }
+/* rendering */
+const esc = t => t.replace(/[&<>"]/g, c => ({ "&": "&amp;", "<": "&lt;", ">": "&gt;", '"': "&quot;" }[c]));
+function md(t) {
+  const blocks = [];
+  t = esc(t).replace(/```\w*\n?([\s\S]*?)```/g, (_, c) => {
+    blocks.push(`<pre><code>${c.trim()}</code></pre>`);
+    return `\u0000${blocks.length - 1}\u0000`;
+  });
+  t = t.replace(/`([^`\n]+)`/g, "<code>$1</code>").replace(/\*\*([^*]+)\*\*/g, "<strong>$1</strong>");
+  t = t.split(/\n{2,}/).map(p => {
+    if (/^\s*[-*] /.test(p)) return "<ul>" + p.split("\n").map(l => `<li>${l.replace(/^\s*[-*] /, "")}</li>`).join("") + "</ul>";
+    if (/^\s*\d+\. /.test(p)) return "<ol>" + p.split("\n").map(l => `<li>${l.replace(/^\s*\d+\. /, "")}</li>`).join("") + "</ol>";
+    return `<p>${p.replace(/\n/g, "<br>")}</p>`;
+  }).join("");
+  return t.replace(/<p>(\u0000\d+\u0000)<\/p>/g, "$1").replace(/\u0000(\d+)\u0000/g, (_, i) => blocks[i]);
 }
-
-
-function createBeams() {
-
-    beams = [];
-
-    const amount =
-        innerWidth < 600 ? 14 : 24;
-
-    for (let i = 0; i < amount; i++) {
-        beams.push(new Beam());
-    }
+function tool(label, fn) {
+  const b = document.createElement("button");
+  b.className = "tool"; b.textContent = label; b.onclick = () => fn(b);
+  return b;
 }
+function add(role, text) {
+  const m = document.createElement("div");
+  m.className = "msg " + role;
+  const b = document.createElement("div");
+  b.className = "body";
+  if (role === "ai") b.innerHTML = md(text); else b.textContent = text;
+  m.append(b);
+  if (role === "ai") m.append(tool("Copy", btn =>
+    navigator.clipboard.writeText(text).then(() => {
+      btn.textContent = "Copied"; setTimeout(() => btn.textContent = "Copy", 1500);
+    })));
+  feed.append(m); feed.classList.add("has"); feed.scrollTop = feed.scrollHeight;
+  return m;
+}
+function fail(text) {
+  const m = add("err", text + ". Check your connection and try again.");
+  m.append(tool("Retry", () => { m.remove(); busy = true; sync(); run(); }));
+}
+const sync = () => { send.disabled = busy || !input.value.trim(); };
+const grow = () => { input.style.height = "auto"; input.style.height = input.scrollHeight + "px"; };
 
-
-function animate() {
-
-    ctx.clearRect(
-        0,
-        0,
-        innerWidth,
-        innerHeight
-    );
-
-    ctx.globalCompositeOperation = "screen";
-
-    beams.forEach(beam => {
-        beam.update();
-        beam.draw();
+/* chat */
+async function run() {
+  const dots = document.createElement("div");
+  dots.className = "msg ai";
+  dots.innerHTML = '<div class="dots" role="status" aria-label="NAF AI is thinking"><i></i><i></i><i></i></div>';
+  feed.append(dots); feed.scrollTop = feed.scrollHeight;
+  try {
+    const r = await fetch(API, {
+      method: "POST",
+      headers: { "Content-Type": "application/json" },
+      body: JSON.stringify({ message: msgs[msgs.length - 1].content, messages: msgs.slice(-20) })
     });
-
-    animationId =
-        requestAnimationFrame(animate);
+    const d = await r.json().catch(() => ({}));
+    if (!r.ok || !d.reply) throw new Error(d.error || "NAF AI could not reply");
+    dots.remove();
+    msgs.push({ role: "assistant", content: d.reply }); save();
+    add("ai", d.reply);
+  } catch (e) { dots.remove(); fail(e.message); }
+  busy = false; sync();
+}
+function ask(text) {
+  text = text.trim();
+  if (busy || !text) return;
+  busy = true; sync();
+  msgs.push({ role: "user", content: text }); save();
+  add("user", text);
+  run();
 }
 
-
-resizeCanvas();
-animate();
-
-window.addEventListener(
-    "resize",
-    resizeCanvas
-);
-
-
-/* =========================
-   USE AI
-========================= */
-
-useAI.addEventListener("click", () => {
-
-    if (transitioning) return;
-
-    transitioning = true;
-
-    useAI.style.transform =
-        "translateX(-50%) scale(.88)";
-
-    useAI.style.opacity = "0";
-
-    landing.classList.add("hidden");
-
-    setTimeout(() => {
-
-        cancelAnimationFrame(animationId);
-
-        loading.classList.add("active");
-
-    }, 400);
-
-
-    setTimeout(() => {
-
-        loading.classList.remove("active");
-
-        aiScreen.classList.add("active");
-
-    }, 2700);
+composer.addEventListener("submit", e => {
+  e.preventDefault();
+  const t = input.value;
+  input.value = ""; grow(); ask(t);
 });
+input.addEventListener("input", () => { grow(); sync(); });
+input.addEventListener("keydown", e => {
+  if (e.key === "Enter" && !e.shiftKey) { e.preventDefault(); composer.requestSubmit(); }
+});
+$("#empty").addEventListener("click", e => {
+  const q = e.target.closest("button")?.dataset.q;
+  if (q) ask(q);
+});
+$("#reset").onclick = () => {
+  if (busy) return;
+  msgs = []; save();
+  feed.querySelectorAll(".msg").forEach(m => m.remove());
+  feed.classList.remove("has"); input.focus();
+};
 
-
-/* =========================
-   SEARCH
-========================= */
-
-function expandSearch() {
-
-    searchBox.classList.add("expanded");
-
-    setTimeout(() => {
-        prompt.focus();
-    }, 100);
-}
-
-
-searchBox.addEventListener(
-    "click",
-    expandSearch
-);
-
-
-prompt.addEventListener(
-    "focus",
-    () => {
-        searchBox.classList.add("expanded");
-    }
-);
-
-
-prompt.addEventListener(
-    "input",
-    () => {
-
-        searchBox.classList.toggle(
-            "has-text",
-            prompt.value.length > 0
-        );
-
-    }
-);
-
-
-/* =========================
-   CLEAR
-========================= */
-
-clearBtn.addEventListener(
-    "click",
-    event => {
-
-        event.stopPropagation();
-
-        prompt.value = "";
-
-        searchBox.classList.remove(
-            "has-text"
-        );
-
-        prompt.focus();
-    }
-);
-
-
-/* =========================
-   SEARCH / SEND
-========================= */
-
-async function sendPrompt() {
-
-    const message = prompt.value.trim();
-
-    if (!message) return;
-
-    console.log("Sending to NAF AI:", message);
-
-    try {
-
-        const response = await fetch(
-            "https://naf-ai-backend.vercel.app/api/chat",
-            {
-                method: "POST",
-
-                headers: {
-                    "Content-Type": "application/json"
-                },
-
-                body: JSON.stringify({
-                    message: message
-                })
-            }
-        );
-
-        const data = await response.json();
-
-        console.log("NAF AI response:", data);
-
-        if (!response.ok) {
-            throw new Error(
-                data.error || "Something went wrong"
-            );
-        }
-
-        alert(data.reply);
-
-        prompt.value = "";
-
-        searchBox.classList.remove("has-text");
-
-    } catch (error) {
-
-        console.error(error);
-
-        alert(
-            "NAF AI couldn't respond right now."
-        );
-    }
-}
-prompt.addEventListener(
-    "keydown",
-    event => {
-
-        if (
-            event.key === "Enter" &&
-            !event.shiftKey
-        ) {
-
-            event.preventDefault();
-
-            sendPrompt();
-        }
-    }
-);
-
-
-/* =========================
-   BACK
-========================= */
-
-backBtn.addEventListener(
-    "click",
-    () => {
-
-        aiScreen.classList.remove(
-            "active"
-        );
-
-        loading.classList.remove(
-            "active"
-        );
-
-        landing.classList.remove(
-            "hidden"
-        );
-
-        useAI.style.opacity = "1";
-
-        useAI.style.transform =
-            "translateX(-50%)";
-
-        prompt.value = "";
-
-        searchBox.classList.remove(
-            "expanded",
-            "has-text"
-        );
-
-        transitioning = false;
-
-        resizeCanvas();
-        animate();
-    }
-);
+msgs.forEach(m => add(m.role === "user" ? "user" : "ai", m.content));
+})();
