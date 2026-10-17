@@ -29,27 +29,21 @@ export default async function handler(req, res) {
   while (history.length && history[0].role !== "user") history.shift();
   if (!history.length) return res.status(400).json({ error: "Empty message" });
 
-  try {
-    const r = await fetch("https://api.anthropic.com/v1/messages", {
+    try {
+    const r = await fetch("https://api.openai.com/v1/chat/completions", {
       method: "POST",
       headers: {
-        "content-type": "application/json",
-        "x-api-key": process.env.ANTHROPIC_API_KEY,
-        "anthropic-version": "2023-06-01"
+        "Content-Type": "application/json",
+        Authorization: `Bearer ${process.env.OPENAI_API_KEY}`
       },
       body: JSON.stringify({
-        model: "claude-sonnet-5-5",
-        max_tokens: 1024,
-        system: SYSTEM,
-        messages: history
+        model: "gpt-4o-mini",
+        messages: [{ role: "system", content: SYSTEM }, ...history]
       })
     });
     const d = await r.json();
     if (!r.ok) return res.status(502).json({ error: "The AI service returned an error" });
-
-    const reply = (d.content || []).filter(b => b.type === "text").map(b => b.text).join("\n");
-    return res.status(200).json({ reply });
+    return res.status(200).json({ reply: d.choices?.[0]?.message?.content || "" });
   } catch {
     return res.status(500).json({ error: "Server error" });
   }
-}
