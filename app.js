@@ -1,65 +1,12 @@
 (() => {
 const $ = s => document.querySelector(s);
 const API = "https://naf-ai-backend.vercel.app/api/chat";
-const KEY = "naf-ai-chat-v2";
-const landing = $("#landing"), chat = $("#chat"), feed = $("#feed");
-const input = $("#input"), send = $("#send"), composer = $("#composer");
+const KEY = "naf-ai-chat-v3";
+const feed = $("#feed"), input = $("#input"), send = $("#send"), composer = $("#composer");
 let msgs = [], busy = false;
 try { msgs = JSON.parse(localStorage.getItem(KEY)) || []; } catch {}
 const save = () => { try { localStorage.setItem(KEY, JSON.stringify(msgs.slice(-40))); } catch {} };
 
-/* meteors (landing only) */
-const fx = (() => {
-  const c = $("#fx"), x = c.getContext("2d");
-  const reduce = matchMedia("(prefers-reduced-motion: reduce)").matches;
-  let b = [], W, H, id = 0;
-  const mk = init => ({
-    x: init ? Math.random() * W : Math.random() * (W + H) - H,
-    y: init ? Math.random() * H : -120,
-    l: Math.random() * 160 + 80,
-    s: Math.random() * 3 + 2,
-    o: Math.random() * .4 + .15,
-    c: Math.random() < .35 ? "255,106,31" : "255,255,255"
-  });
-  function size() {
-    const d = Math.min(devicePixelRatio || 1, 2);
-    W = innerWidth; H = innerHeight;
-    c.width = W * d; c.height = H * d;
-    x.setTransform(d, 0, 0, d, 0, 0);
-    b = Array.from({ length: W < 600 ? 12 : 22 }, () => mk(true));
-  }
-  function tick() {
-    x.clearRect(0, 0, W, H);
-    for (const m of b) {
-      m.x += m.s * .8; m.y += m.s * .8;
-      if (m.x - m.l > W || m.y - m.l > H) Object.assign(m, mk(false));
-      x.save(); x.translate(m.x, m.y); x.rotate(Math.PI / 4);
-      const g = x.createLinearGradient(-m.l, 0, 0, 0);
-      g.addColorStop(0, `rgba(${m.c},0)`);
-      g.addColorStop(1, `rgba(${m.c},${m.o})`);
-      x.fillStyle = g; x.fillRect(-m.l, -1, m.l, 2); x.restore();
-    }
-    id = requestAnimationFrame(tick);
-  }
-  addEventListener("resize", size); size();
-  return {
-    start() { cancelAnimationFrame(id); if (!reduce) tick(); },
-    stop() { cancelAnimationFrame(id); }
-  };
-})();
-fx.start();
-
-/* views */
-function show(v) {
-  landing.classList.toggle("on", v === landing);
-  chat.classList.toggle("on", v === chat);
-  if (v === landing) fx.start();
-  else { fx.stop(); input.focus({ preventScroll: true }); feed.scrollTop = feed.scrollHeight; }
-}
-$("#start").onclick = () => show(chat);
-$("#back").onclick = () => show(landing);
-
-/* rendering */
 const esc = t => t.replace(/[&<>"]/g, c => ({ "&": "&amp;", "<": "&lt;", ">": "&gt;", '"': "&quot;" }[c]));
 function md(t) {
   const blocks = [];
@@ -101,7 +48,6 @@ function fail(text) {
 const sync = () => { send.disabled = busy || !input.value.trim(); };
 const grow = () => { input.style.height = "auto"; input.style.height = input.scrollHeight + "px"; };
 
-/* chat */
 async function run() {
   const dots = document.createElement("div");
   dots.className = "msg ai";
